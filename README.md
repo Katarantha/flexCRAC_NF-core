@@ -12,7 +12,7 @@
 
 ## Introduction
 
-<!-- TODO nf-core: Write a 1-2 sentence summary of what data the pipeline is for and what it does -->
+This Pipeline is designed to take Dr Sander Grannemans PyCrac package aswell as three flexible aligners to allow for the processing and alignment of CRAC cDNA data into readable gene annotated results.
 
 **nf-core/cracflexalign** is a bioinformatics best-practice analysis pipeline for A pipeline for the processing and analysis of CRAC cDNA readouts with multiple flexible alignment options.
 

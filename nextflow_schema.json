@@ -63,6 +63,15 @@
                     "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
                     "fa_icon": "far fa-file-code"
                 },
+                "gtf": {
+                    "type": "string",
+                    "format": "file-path",
+                    "mimetype": "text/plain",
+                    "pattern": "^\\S+\\.gtf(\\.gz)?$",
+                    "description": "Path to GTF annotation file.",
+                    "fa_icon": "fas fa-code-branch",
+                    "help_text": "This parameter is *mandatory* for PyReadCounters functionality."
+                },
                 "igenomes_base": {
                     "type": "string",
                     "format": "directory-path",
@@ -80,6 +89,23 @@
                 }
             }
         },
+        
+        "alignment_options": {
+            "title": "Alignment options",
+            "type": "object",
+            "fa_icon": "fas fa-map-signs",
+            "description": "Options to select between Aligner and Individual Aligner parameters",
+            "properties": {
+                "aligner": {
+                    "type": "string",
+                    "default": "star",
+                    "description": "Specifies the alignment algorithm to use - available options are 'star', 'hisat2' and 'bowtie2'",
+                    "fa_icon": "fas fa-map-signs",
+                    "enum": ["star", "hisat2", "bowtie2"]
+                }
+            }
+        },
+
         "institutional_config_options": {
             "title": "Institutional config options",
             "type": "object",
@@ -273,6 +299,9 @@
         },
         {
             "$ref": "#/definitions/reference_genome_options"
+        },
+        {
+            "$ref": "#/definitions/alignment_options"
         },
         {
             "$ref": "#/definitions/institutional_config_options"
