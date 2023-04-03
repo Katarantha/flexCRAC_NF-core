@@ -41,6 +41,7 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK             } from '../subworkflows/local/input_check'
+include { BARCODE_LIST            } from '../subworkflows/local/barcode_list'
 include { FLEXBAR                 } from '../modules/local/flexbar'
 include { PYBARCODEFILTER         } from '../modules/local/pybarcodefilter'
 include { PYFASTQDUPLICATEREMOVER } from '../modules/local/pyfastqduplicateremover'
@@ -89,23 +90,26 @@ workflow CRACFLEXALIGN {
     )
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
 
-    // Stage Input files as channels
-
-    reads_ch      = channel.fromPath(params.reads, checkIfExists: true)
-    barcodes_ch   = channel.fromPath(params.barcodes, checkIfExists: true)
-    novoindex_ch  = channel.fromPath(params.novoindex, checkIfExists: true)
-    gtf_ch        = channel.fromPath(params.gtf, checkIfExists: true)
-    genome_ch     = channel.fromPath(params.genome, checkIfExists: true)
-
-
+    //
+    // SUWORKFLOW: parse Samplesheet and generate a barcode.list file 
+    //
+    BARCODE_LIST (
+        ch_input
+    )
 
     //
     // MODULE: Run FastQC
     //
+
     FASTQC (
         INPUT_CHECK.out.reads
     )
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+
+        FLEXBAR( 
+        INPUT_CHECK.out.reads 
+    ) 
+    ch_versions = ch_versions.mix(FLEXBAR.out.versions.first())
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
@@ -114,6 +118,7 @@ workflow CRACFLEXALIGN {
     //
     // MODULE: MultiQC
     //
+
     workflow_summary    = WorkflowCracflexalign.paramsSummaryMultiqc(workflow, summary_params)
     ch_workflow_summary = Channel.value(workflow_summary)
 
@@ -134,80 +139,77 @@ workflow CRACFLEXALIGN {
     )
     multiqc_report = MULTIQC.out.report.toList()
 
-    if (params.aligner == 'star'){
-        indexed_files_ch = STAR_GENOMEGENERATE( genome_ch, gtf_ch)
-    }
+//     if (params.aligner == 'star'){
+//         indexed_files_ch = STAR_GENOMEGENERATE( genome_ch, gtf_ch)
+//     }
 
-    if (params.aligner == 'hisat2'){
-        indexed_files_ch = HISAT2_BUILD( genome_ch )
-    }
+//     if (params.aligner == 'hisat2'){
+//         indexed_files_ch = HISAT2_BUILD( genome_ch )
+//     }
 
-    if (params.aligner == 'bowtie2'){
-        indexed_files_ch = BOWTIE2_BUILD( genome_ch )
-    }
-    // run flexbar to trim adapter sequences
+//     if (params.aligner == 'bowtie2'){
+//         indexed_files_ch = BOWTIE2_BUILD( genome_ch )
+//     }
    
-    flexbar_ch = FLEXBAR( reads_ch ) 
+//     //run pyBarcodeFilter with flexbar trimmed reads and barcode sequences
 
-    //run pyBarcodeFilter with flexbar trimmed reads and barcode sequences
+//     demultiplex_ch = PYBARCODEFILTER( flexbar_ch, barcodes_ch )
 
-    demultiplex_ch = PYBARCODEFILTER( flexbar_ch, barcodes_ch )
+//     //Collapse the demultiplexed files to remove duplicates using pyFastqDuplicateRemover, flatten the outputs of demultiplexing to stage the inputs as seven seperate files
 
-    //Collapse the demultiplexed files to remove duplicates using pyFastqDuplicateRemover, flatten the outputs of demultiplexing to stage the inputs as seven seperate files
+//     collapse_input_ch = demultiplex_ch.flatten()
 
-    collapse_input_ch = demultiplex_ch.flatten()
+//     collapse_ch = PYFASTQDUPLICATEREMOVER( collapse_input_ch )
 
-    collapse_ch = PYFASTQDUPLICATEREMOVER( collapse_input_ch )
+//     //align the processed reads to the pregenerated Novoindex using Novoalign
 
-    //align the processed reads to the pregenerated Novoindex using Novoalign
+//     if (params.aligner == 'star'){
+//         align_ch = STAR_ALIGN( indexed_files_ch, collapse_ch)
+//     }
 
-    if (params.aligner == 'star'){
-        align_ch = STAR_ALIGN( indexed_files_ch, collapse_ch)
-    }
+//     if (params.aligner == 'hisat2'){
+//         align_ch = HISAT2_ALIGN( indexed_files_ch, collapse_ch)
+//     }
 
-    if (params.aligner == 'hisat2'){
-        align_ch = HISAT2_ALIGN( indexed_files_ch, collapse_ch)
-    }
+//     if (params.aligner == 'bowtie2'){
+//         align_ch = BOWTIE2_ALIGN( indexed_files_ch, collapse_ch)
+//     }
+//     //generation of hit tables with pyReadCounters.py from the aligned reads
 
-    if (params.aligner == 'bowtie2'){
-        align_ch = BOWTIE2_ALIGN( indexed_files_ch, collapse_ch)
-    }
-    //generation of hit tables with pyReadCounters.py from the aligned reads
+//     if (params.aligner == 'star'){
 
-    if (params.aligner == 'star'){
+//         PYREADCOUNTERS(gtf_ch, align_ch)
 
-        PYREADCOUNTERS(gtf_ch, align_ch)
+//         mapped_ch = SECONDPYREADCOUNTERS(gtf_ch, align_ch)
+//     }
 
-        mapped_ch = SECONDPYREADCOUNTERS(gtf_ch, align_ch)
-    }
+//     if (params.aligner == 'hisat2'){
 
-    if (params.aligner == 'hisat2'){
+//         PYREADCOUNTERS(gtf_ch, align_ch)
 
-        PYREADCOUNTERS(gtf_ch, align_ch)
+//         mapped_ch = SECONDPYREADCOUNTERS(gtf_ch, align_ch)
+//     }
 
-        mapped_ch = SECONDPYREADCOUNTERS(gtf_ch, align_ch)
-    }
+//     if (params.aligner == 'bowtie2'){
 
-    if (params.aligner == 'bowtie2'){
+//         PYREADCOUNTERS(gtf_ch, align_ch)
 
-        PYREADCOUNTERS(gtf_ch, align_ch)
-
-        mapped_ch = SECONDPYREADCOUNTERS(gtf_ch, align_ch)
-    }
+//         mapped_ch = SECONDPYREADCOUNTERS(gtf_ch, align_ch)
+//     }
 
 
 
-    //generation of chromosome files for usage by the subsequent steps
+//     //generation of chromosome files for usage by the subsequent steps
 
-    chromosome_ch = CHROMOSOMELENGTH( genome_ch )
+//     chromosome_ch = CHROMOSOMELENGTH( genome_ch )
 
-    //generation of a readable coverage file using pyGTF2sgr.py
+//     //generation of a readable coverage file using pyGTF2sgr.py
 
-    PYGTF2SGR( chromosome_ch, mapped_ch )
+//     PYGTF2SGR( chromosome_ch, mapped_ch )
 
-    //generation of readable bedgraph file using pyGTF2bedgraph.py
+//     //generation of readable bedgraph file using pyGTF2bedgraph.py
 
-    PYGTF2BEDGRAPH( chromosome_ch, mapped_ch )
+//     PYGTF2BEDGRAPH( chromosome_ch, mapped_ch )
 
 }
 

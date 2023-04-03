@@ -12,9 +12,14 @@
                 "pattern": "^\\S+$",
                 "errorMessage": "Sample name must be provided and cannot contain spaces"
             },
+            "barcode": {
+                "type": "string",
+                "pattern": "[ACTG]",
+                "errorMessage": "Barcode string must be provided and cannot contain spaces or characters outside of ACTG"
+            },
             "fastq_1": {
                 "type": "string",
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
+                "pattern": "^\\S+\\.f(ast)?q\\$",
                 "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
             },
             "fastq_2": {
@@ -22,7 +27,7 @@
                 "anyOf": [
                     {
                         "type": "string",
-                        "pattern": "^\\S+\\.f(ast)?q\\.gz$"
+                        "pattern": "^\\S+\\.f(ast)?q\\$"
                     },
                     {
                         "type": "string",

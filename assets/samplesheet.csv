@@ -1,2 +1,8 @@
-sample,fastq_1,fastq_2
-sample_test, /datastore/homes3/s1954394/project/data/150722_D00261_0251_AC7MRDANXX_4_sub100000.fastq,
+sample,barcode,fastq_1,fastq_2
+L5ad,NNNCGCTTAGC,/datastore/homes3/s1954394/project/data/150722_D00261_0251_AC7MRDANXX_4_sub100000.fastq.gz,
+L5Cd,NNNGACTTAGC,/datastore/homes3/s1954394/project/data/150722_D00261_0251_AC7MRDANXX_4_sub100000.fastq.gz,
+L5Ac,NNNGCGCAGC,/datastore/homes3/s1954394/project/data/150722_D00261_0251_AC7MRDANXX_4_sub100000.fastq.gz,
+L5Cc,NNNACTCAGC,/datastore/homes3/s1954394/project/data/150722_D00261_0251_AC7MRDANXX_4_sub100000.fastq.gz,
+L5Ab,NNNATTAGC,/datastore/homes3/s1954394/project/data/150722_D00261_0251_AC7MRDANXX_4_sub100000.fastq.gz,
+L5Aa,NNNTAAGC,/datastore/homes3/s1954394/project/data/150722_D00261_0251_AC7MRDANXX_4_sub100000.fastq.gz,
+L5Ca,NNNCTAGC,/datastore/homes3/s1954394/project/data/150722_D00261_0251_AC7MRDANXX_4_sub100000.fastq.gz,
