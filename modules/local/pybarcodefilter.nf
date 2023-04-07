@@ -7,15 +7,15 @@ process PYBARCODEFILTER {
     tuple val(meta), path(barcodes)
 
     output:
-    tuple val(meta), path(flexbar_trimmed_*_*.fastq), emit: demultiplexed
-    path "versions.yml"                             , emit: versions   
+    tuple val(meta), path('flexbar_trimmed_*_*.fastq'), emit: demultiplexed
+    path "versions.yml"                               , emit: versions   
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     """
-    pyBarcodeFilter.py -f '$flexbar_output' -b '$barcodes' -m '1'
+    pyBarcodeFilter.py -f '$trimmed' -b '$barcodes' -m '1'
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

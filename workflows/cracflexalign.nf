@@ -41,7 +41,7 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK             } from '../subworkflows/local/input_check'
-include { BARCODE_LIST            } from '../subworkflows/local/barcode_list'
+include { BARCODE_LIST_GENERATE   } from '../subworkflows/local/barcode_list_generate'
 include { FLEXBAR                 } from '../modules/local/flexbar'
 include { PYBARCODEFILTER         } from '../modules/local/pybarcodefilter'
 include { PYFASTQDUPLICATEREMOVER } from '../modules/local/pyfastqduplicateremover'
@@ -93,7 +93,7 @@ workflow CRACFLEXALIGN {
     //
     // SUWORKFLOW: parse Samplesheet and generate a barcode.list file 
     //
-    BARCODE_LIST (
+    BARCODE_LIST_GENERATE (
         ch_input
     )
 
@@ -110,6 +110,11 @@ workflow CRACFLEXALIGN {
         INPUT_CHECK.out.reads 
     ) 
     ch_versions = ch_versions.mix(FLEXBAR.out.versions.first())
+
+    PYBARCODEFILTER (
+        BARCODE_LIST_GENERATE.out.barcodes, FLEXBAR.out.trimmed
+    )
+    ch_versions = ch_versions.mix(PYBARCODEFILTER.out.versions.first())
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')

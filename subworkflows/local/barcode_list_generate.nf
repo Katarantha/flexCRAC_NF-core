@@ -4,7 +4,7 @@
 
 include { GENERATE_BARCODES } from '../../modules/local/generate_barcodes'
 
-workflow BARCODE_LIST {
+workflow BARCODE_LIST_GENERATE {
     take:
     samplesheet
 
