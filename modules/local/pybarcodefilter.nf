@@ -3,8 +3,9 @@ process PYBARCODEFILTER {
     label 'process_high'
 
     input:
-    path(trimmed)
-    tuple val(meta), path(barcodes)
+    path(barcodes)
+    tuple val(meta), path(trimmed)
+    
 
     output:
     tuple val(meta), path('flexbar_trimmed_*_*.fastq'), emit: demultiplexed
