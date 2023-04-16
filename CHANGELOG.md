@@ -3,7 +3,21 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.0.2dev - 3rd March 2023
+## v0.0.4dev - 16th April 2023
+
+### `Fixed`
+	cracflexalign workflow: 	formatting and temporary shut down of versioning on Flexbar and pyBarcodeFilter
+	input_check.nf subworkflow: addition of groupTuple() operator to handle one file with multiple sampleID's
+	fastqc/main.nf module:		changes to input staging to allow functionality with previous changes
+	pyBarcodefilter.nf module:	Bug Fix - still unresolved as of this version
+
+## v0.0.3dev - 7th April 2023
+
+### `Added`
+	new feature: pyBarcodeFeature module inclusion in cracflexalign workflow
+	new file: 	 addition of BarcodeFilter module and subworflow to parse barcode.list file from samplesheet
+
+## v0.0.2dev - 3rd April 2023
 
 ### `Added`
 	new file:   bin/barcode_parser.py - python script to generate barcode.list file from samplesheet
