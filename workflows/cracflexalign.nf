@@ -106,15 +106,15 @@ workflow CRACFLEXALIGN {
     )
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
-        FLEXBAR( 
-        INPUT_CHECK.out.reads 
+    FLEXBAR ( 
+        INPUT_CHECK.out.reads
     ) 
-    ch_versions = ch_versions.mix(FLEXBAR.out.versions.first())
+    // ch_versions = ch_versions.mix(FLEXBAR.out.versions.first())
 
     PYBARCODEFILTER (
         BARCODE_LIST_GENERATE.out.barcodes, FLEXBAR.out.trimmed
     )
-    ch_versions = ch_versions.mix(PYBARCODEFILTER.out.versions.first())
+    // ch_versions = ch_versions.mix(PYBARCODEFILTER.out.versions.first())
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')

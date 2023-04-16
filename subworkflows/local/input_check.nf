@@ -13,6 +13,7 @@ workflow INPUT_CHECK {
         .csv
         .splitCsv ( header:true, sep:',' )
         .map { create_fastq_channel(it) }
+        .groupTuple(by: [1])
         .set { reads }
 
     emit:

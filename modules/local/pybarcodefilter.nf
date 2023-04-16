@@ -15,7 +15,7 @@ process PYBARCODEFILTER {
 
     script:
     """
-    pyBarcodeFilter.py -f '$trimmed' -b '$barcodes' -m '1'
+    pyBarcodeFilter.py -f $trimmed -b $barcodes -m 1
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
