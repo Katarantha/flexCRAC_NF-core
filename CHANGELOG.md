@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.0.6dev - 18th April 2023
+
+### `Added`
+	flatMap Function: Processing of the output files from pyBarcodeFilter process to associate the correct meta ID to 
+					  the corresponding fastq file and flattens them for downstream process functionality
+
+### `Fixed`
+	pyfastqduplicateremover.nf: changes to input staging and version output bug fix
+
 ## v0.0.5dev - 16th April 2023
 
 ### `Fixed`

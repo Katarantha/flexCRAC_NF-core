@@ -93,6 +93,7 @@ workflow CRACFLEXALIGN {
     //
     // SUWORKFLOW: parse Samplesheet and generate a barcode.list file 
     //
+
     BARCODE_LIST_GENERATE (
         ch_input
     )
@@ -106,20 +107,54 @@ workflow CRACFLEXALIGN {
     )
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
+    //
+    // MODULE: Run Flexbar
+    //
+
     FLEXBAR ( 
         INPUT_CHECK.out.reads
     ) 
     // ch_versions = ch_versions.mix(FLEXBAR.out.versions.first())
+
+    //
+    // MODULE: Run pyBarcodeFilter
+    //
 
     PYBARCODEFILTER (
         BARCODE_LIST_GENERATE.out.barcodes, FLEXBAR.out.trimmed
     )
     // ch_versions = ch_versions.mix(PYBARCODEFILTER.out.versions.first())
 
+    ch_id_pair = PYBARCODEFILTER.out.demultiplexed
+
+    //
+    // This block searches for the comman barcode string in both the meta ID and the fastq files produced by 
+    // pyBarcodeFilter and associates the two corresponsing files in the respective lists for downstream processing
+    //
+    
+    ch_id_pair.flatMap { meta_list, fastq_list ->
+        def meta_map = meta_list.collectEntries { 
+            meta ->  [ meta.id.split('_').first(), meta ]
+
+        }
+        def fastq_map = fastq_list.collectEntries { 
+            fastq -> [ fastq.simpleName.split('_').last(), fastq ]
+
+        }
+
+        meta_map.collect { k, v -> [ v, fastq_map[k] ] }
+    }
+
+    // PYFASTQDUPLICATEREMOVER(
+    //     ch_id_pair
+    // )
+    // ch_versions = ch_versions.mix(PYFASTQDUPLICATEREMOVER.out.versions.first())
+
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
 
+    
     //
     // MODULE: MultiQC
     //
