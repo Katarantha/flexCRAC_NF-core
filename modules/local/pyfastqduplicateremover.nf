@@ -14,11 +14,11 @@ process PYFASTQDUPLICATEREMOVER{
 
     script:
     """
-    pyFastqDuplicateRemover.py -f '$fastq_files' -o '${fastq_files.baseName}_collapsed.fasta'
+    pyFastqDuplicateRemover.py -f '$demultiplexed' -o '${demultiplexed.baseName}_collapsed.fasta'
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        pyFastqDuplicateRemover: \$( pyFastqDuplicateRemover.py --versio  -version)
+        pyFastqDuplicateRemover: \$( pyFastqDuplicateRemover.py --version )
     END_VERSION
     """
 } 
