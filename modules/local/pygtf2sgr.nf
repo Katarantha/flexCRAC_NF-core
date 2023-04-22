@@ -3,8 +3,7 @@ process PYGTF2SGR{
     label 'process_high'
 
     input:
-    tuple val(meta), path(chromosome)
-    each(mapped2)
+    tuple val(meta), path(mapped2), path(chromosome)
 
     output:
     tuple val(meta), path ("*.sgr") , emit: sgr

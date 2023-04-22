@@ -212,9 +212,24 @@ workflow CRACFLEXALIGN {
     )
     // ch_versions = ch_versions.mix(SECONDPYREADCOUNTERS.out.versions.first())
 
+    ch_second_pyread_out = SECONDPYREADCOUNTERS.out.mapped2
+
     CHROMOSOMELENGTH(
         ch_fasta
     )
+    // ch_versions = ch_versions.mix(CHROMOSOMELENGTH.out.versions.first())
+
+    ch_chromosome = CHROMOSOMELENGTH.out.chromosome
+
+    ch_post_align_input = ch_second_pyread_out 
+                            .combine(ch_chromosome)
+
+    //generation of a readable coverage file using pyGTF2sgr.py
+
+    PYGTF2SGR(
+        ch_post_align_input
+    )
+    // ch_versions = ch_versions.mix(PYGTF2SGR.out.versions.first())
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')

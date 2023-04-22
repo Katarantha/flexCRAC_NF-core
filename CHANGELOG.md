@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v.0.0.11dev - 22 April 2023
+
+### `Added`
+	cracflexalign.nf: Addition of pyGTF2SGR module functionality
+
+### `Fixed`
+	modules/local/pygtf2sgr.nf: Input staging changes to allow functionality in current pipeline 
+	modules/local/pycalculatechromosomelengths.nf: Formatting changes
+
 ## v0.0.10dev - 22 April 2023
 
 ### `Added`

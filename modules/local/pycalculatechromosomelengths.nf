@@ -6,7 +6,7 @@ process CHROMOSOMELENGTH{
     path fasta 
 
     output:
-    path '*.txt'                  , emit: chromosome
+    path '*.txt'                   , emit: chromosome
     path "versions.yml"            , emit: version
 
     when:
