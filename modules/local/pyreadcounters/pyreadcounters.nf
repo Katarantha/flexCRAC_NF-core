@@ -3,8 +3,8 @@ process PYREADCOUNTERS{
     label 'process_high'
     
     input:
-    tuple val(meta), path(gtf)
-    each(bam)
+    tuple val(meta), path(bam)
+    path(gtf)
 
     output:
     tuple val(meta), path("*.gtf"), emit: mapped
@@ -15,7 +15,7 @@ process PYREADCOUNTERS{
 
     script:
     """
-    pyReadCounters.py -f '$aligned_files' --gtf '$gtf' -v --rpkm -o '${aligned_files.baseName}' --file_type=sam
+    pyReadCounters.py -f '$bam' --gtf '$gtf' -v --rpkm -o '${bam.baseName}' --file_type=sam
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

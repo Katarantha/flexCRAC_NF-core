@@ -185,7 +185,19 @@ workflow CRACFLEXALIGN {
             params.seq_platform,
             params.seq_center
         )
+
+        ch_alignment_out = STAR_ALIGN.out.bam
     }
+
+    PYREADCOUNTERS(
+        ch_alignment_out,
+        params.gtf
+    )
+
+    SECONDPYREADCOUNTERS(
+        ch_alignment_out,
+        params.gtf
+    )
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
