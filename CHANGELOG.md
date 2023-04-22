@@ -3,7 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v.0.0.11dev - 22 April 2023
+## v0.0.12dev - 22 April 2023
+
+### `Added`
+	cracflexalign.nf: Addition of pyGTF2bedGraph functionality
+
+### `Fixed`
+	modules/local/pygtf2bedgraph.nf: Input staging changes to allow functionality in current pipeline
+
+## v0.0.11dev - 22 April 2023
 
 ### `Added`
 	cracflexalign.nf: Addition of pyGTF2SGR module functionality

@@ -231,10 +231,14 @@ workflow CRACFLEXALIGN {
     )
     // ch_versions = ch_versions.mix(PYGTF2SGR.out.versions.first())
 
+    PYGTF2BEDGRAPH(
+        ch_post_align_input
+    )
+
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
-
+    //ch_versions = ch_versions.mix(PYGTF2BEDGRAPH.out.versions.first())
     
     //
     // MODULE: MultiQC
