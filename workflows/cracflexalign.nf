@@ -68,6 +68,7 @@ include { HISAT2_BUILD                } from '../modules/nf-core/hisat2/build/ma
 include { HISAT2_ALIGN                } from '../modules/nf-core/hisat2/align/main'
 include { BOWTIE2_BUILD               } from '../modules/nf-core/bowtie2/build/main'
 include { BOWTIE2_ALIGN               } from '../modules/nf-core/bowtie2/align/main'  
+include { CHROMOSOMELENGTH            } from '../modules/local/pycalculatechromosomelengths'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,6 +119,7 @@ workflow CRACFLEXALIGN {
             ch_fasta, 
             params.gtf
         )
+        // ch_versions = ch_versions.mix(STAR_GENOMEGENERATE.out.versions.first())
     }
 
     //
@@ -185,18 +187,33 @@ workflow CRACFLEXALIGN {
             params.seq_platform,
             params.seq_center
         )
+        // ch_versions = ch_versions.mix(STAR_ALIGN.out.versions.first())
 
         ch_alignment_out = STAR_ALIGN.out.bam
     }
+
+    //
+    // MODULE: run PYREADCOUNTERS:
+    //
 
     PYREADCOUNTERS(
         ch_alignment_out,
         params.gtf
     )
+    // ch_versions = ch_versions.mix(PYREADCOUNTERS.out.versions.first())
+
+    //
+    // MODULE: run SECONDPYREADCOUNTERS:
+    //
 
     SECONDPYREADCOUNTERS(
         ch_alignment_out,
         params.gtf
+    )
+    // ch_versions = ch_versions.mix(SECONDPYREADCOUNTERS.out.versions.first())
+
+    CHROMOSOMELENGTH(
+        ch_fasta
     )
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
