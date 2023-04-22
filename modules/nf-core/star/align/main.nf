@@ -8,8 +8,7 @@ process STAR_ALIGN {
         'quay.io/biocontainers/mulled-v2-1fa26d1ce03c295fe2fdcf85831a92fbcbd7e8c2:1df389393721fc66f3fd8778ad938ac711951107-0' }"
 
     input:
-    tuple val(meta), path(reads)
-    path index
+    tuple val(meta), path(collapsed), path(index)
     path gtf
     val star_ignore_sjdbgtf
     val seq_platform
@@ -44,7 +43,7 @@ process STAR_ALIGN {
     """
     STAR \\
         --genomeDir $index \\
-        --readFilesIn $reads  \\
+        --readFilesIn $collapsed  \\
         --runThreadN $task.cpus \\
         --outFileNamePrefix $prefix. \\
         $out_sam_type \\

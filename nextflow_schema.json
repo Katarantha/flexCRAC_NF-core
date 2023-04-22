@@ -94,7 +94,7 @@
             "title": "Alignment options",
             "type": "object",
             "fa_icon": "fas fa-map-signs",
-            "description": "Options to select between Aligner and Individual Aligner parameters",
+            "description": "Options to adjust Aligner and Individual Aligner parameters",
             "properties": {
                 "aligner": {
                     "type": "string",
@@ -102,6 +102,21 @@
                     "description": "Specifies the alignment algorithm to use - available options are 'star', 'hisat2' and 'bowtie2'",
                     "fa_icon": "fas fa-map-signs",
                     "enum": ["star", "hisat2", "bowtie2"]
+                },
+                "star_ignore_sjdbgtf": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-ban",
+                    "description": "When using pre-built STAR indices do not re-extract and use splice junctions from the GTF file"
+                },
+                "seq_center": {
+                    "type": "string",
+                    "description": "Sequencing center information to be added to the read group of BAM files",
+                    "fa_icon": "fas fa-synagogue"
+                },
+                "seq_platform": {
+                    "type": "string",
+                    "description": "Sequencing platform information to be added to the read group of the BAM files",
+                    "fa_icon": "fas fa-synagogue"
                 }
             }
         },

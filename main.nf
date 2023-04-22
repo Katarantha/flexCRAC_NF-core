@@ -20,6 +20,7 @@ nextflow.enable.dsl = 2
 
 // Genome fasta file used for chromosome file generation
 params.fasta = WorkflowMain.getGenomeAttribute(params, 'fasta')
+params.gtf   = WorkflowMain.getGenomeAttribute(params, 'gtf')
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

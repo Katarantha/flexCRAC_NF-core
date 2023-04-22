@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.0.8dev - 22 April 2023
+
+### `Added`
+	cracflexalign.nf	: Added STAR ALIGN and GENOMEGENERATE fucntionality, Addition of channels and input staging      for Alignment steps
+	main.nf				: Addition if GTF input parameter
+	nextflow.config 	: Addition of parameters to accomodate inputs for STAR_GENERATE and STAR_ALIGN
+	nextflow_schema.json: Addition of input parameter specifications mentioned for previous step
+
+### `Fixed`
+	assets/samplesheet.csv			  : Changes to file paths due to development server changes
+	modules/nf-core/star/align/main.nf: Changes to input parameters to allow functionality in this pipeline
+
 ## v0.0.7dev - 19th April 2023
 
 ### `Added`
