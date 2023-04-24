@@ -24,10 +24,16 @@ On release, automated continuous integration tests run the pipeline on a full-si
 
 ## Pipeline summary
 
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
-
 1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
-2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+2. STAR Index Generation ([`STAR Genome Generate`](https://github.com/alexdobin/STAR))
+2. Adapter Trimming ([`Flexbar`](https://github.com/seqan/flexbar))
+3. Read Demultiplexing ([`pyBarcodeFilter`](https://sandergranneman.bio.ed.ac.uk/pycrac-software))
+5. Read Collapsing ([`pyFastqDuplicateRemover`](https://sandergranneman.bio.ed.ac.uk/pycrac-software))
+6. STAR Read Alignment ([`Star Align`](https://github.com/alexdobin/STAR))
+7. Two rounds of gene hittable file production ([`pyReadCounters`](https://sandergranneman.bio.ed.ac.uk/pycrac-software))
+8. Generation of .sgr files ([`pyGTF2sgr`](https://sandergranneman.bio.ed.ac.uk/pycrac-software))
+9. Generation of bedgraph files ([`pyGTF2bedGraph`](https://sandergranneman.bio.ed.ac.uk/pycrac-software))
+3. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
 
 ## Quick Start
 
@@ -50,10 +56,10 @@ On release, automated continuous integration tests run the pipeline on a full-si
 
 4. Start running your own analysis!
 
-   <!-- TODO nf-core: Update the example "typical command" below used to run the pipeline -->
-
    ```bash
-   nextflow run nf-core/cracflexalign --input samplesheet.csv --outdir <OUTDIR> --genome GRCh37 -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
+   nextflow run nf-core/cracflexalign --input path/to/samplesheet.csv --outdir <OUTDIR> --fasta /path/to/genome.fasta
+   -gtf path/to/gtfFile.gtf --seq_platform <Sequencing Platform> --seq_center <Sequencing Center>
+   -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
    ```
 
 ## Documentation
