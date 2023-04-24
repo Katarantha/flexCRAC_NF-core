@@ -3,6 +3,36 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.1.1dev - 24 April 2023
+
+### `Added`
+	cracflexalign.nf	: Addition of Hisat2 aligner and index builder functionality and channel changes to accomodate
+	nextflow.config 	: Addition of hisat2_build_memory and save_unaligned parameters
+	nextflow_schema.json: Addition of hisat2_build_memory and save_unaligned as valid parameters
+
+### `Fixed`
+	modules/local/pyfastqduplicateremover.nf: Bug fix - was previously outputing .fasta files, corrected to .fastq files
+	modules/nf-core/hisat2/align/main.nf	: Changes to input staging to accomodate this pipeline, changes to run command to accomodate input files
+	modules/nf-core/hisat2/build/main.nf	: Changes to inputs, script and run command due to lack of splice site and lack of exon generation	
+
+
+## v0.1.0dev - 24 April 2023
+
+### `Added`
+	cracflexalign.nf: Addition of version checking for all processing within the pipeline
+
+### `Fixed`
+	modules/local/generatebarcodes.nf 			  		 : Bug Fixes to version emit
+	modules/local/flexbar.nf 				  	  		 : Bug Fixes to version emit
+	modules/local/pybarcodefilter.nf 			  		 : Bug Fixes to version emit
+	modules/local/pycalculatechromosomelengths.nf		 : Bug Fixes to version emit
+	modules/local/pyfastqduplicateremover.nf 	  		 : Bug Fixes to version emit	
+	modules/local/pygtf2bedgraph.nf 			  		 : Bug Fixes to version emit
+	modules/local/pygtf2sgr.nf 					  		 : Bug Fixes to version emit
+	modules/local/pyreadcounters/pyreadcounters.nf 		 : Bug Fixes to version emit
+	modules/local/pyreadcounters/secondpyreadcounters.nf : Bug Fixes to version emit
+	subworkflows/local/barcode_list_generate.nf 		 : Bug Fixes to version emit
+
 ## v0.0.12dev - 22 April 2023
 
 ### `Added`

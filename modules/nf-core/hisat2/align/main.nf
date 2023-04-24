@@ -9,9 +9,8 @@ process HISAT2_ALIGN {
         'quay.io/biocontainers/mulled-v2-a97e90b3b802d1da3d6958e0867610c718cb5eb1:2cdf6bf1e92acbeb9b2834b1c58754167173a410-0' }"
 
     input:
-    tuple val(meta), path(reads)
-    path  index
-    path  splicesites
+    tuple val(meta), path(demultiplexed), path(index)
+    // path  splicesites
 
     output:
     tuple val(meta), path("*.bam")                   , emit: bam
@@ -40,9 +39,9 @@ process HISAT2_ALIGN {
         INDEX=`find -L ./ -name "*.1.ht2" | sed 's/\\.1.ht2\$//'`
         hisat2 \\
             -x \$INDEX \\
-            -U $reads \\
+            -U $demultiplexed \\
             $strandedness \\
-            --known-splicesite-infile $splicesites \\
+            -f \\
             --summary-file ${prefix}.hisat2.summary.log \\
             --threads $task.cpus \\
             $seq_center \\

@@ -86,6 +86,14 @@
                     "fa_icon": "fas fa-ban",
                     "hidden": true,
                     "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
+                },
+                "hisat2_build_memory": {
+                    "type": "string",
+                    "default": "200.GB",
+                    "fa_icon": "fas fa-memory",
+                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
+                    "description": "Minimum memory required to use splice sites and exons in the HiSAT2 index build process.",
+                    "help_text": "HiSAT2 requires a huge amount of RAM to build a genome index for larger genomes, if including splice sites and exons e.g. the human genome might typically require 200GB. If you specify less than this threshold for the `HISAT2_BUILD` process then the splice sites and exons will be ignored, meaning that the process will require a lot less memory. If you are working with a small genome, set this parameter to a lower value to reduce the threshold for skipping this check. If using a larger genome, consider supplying more memory to the `HISAT2_BUILD` process."
                 }
             }
         },
@@ -117,6 +125,12 @@
                     "type": "string",
                     "description": "Sequencing platform information to be added to the read group of the BAM files",
                     "fa_icon": "fas fa-synagogue"
+                },
+                "save_unaligned": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-save",
+                    "description": "Where possible, save unaligned reads from either STAR, HISAT2 or Salmon to the results directory.",
+                    "help_text": "This may either be in the form of FastQ or BAM files depending on the options available for that particular tool."
                 }
             }
         },

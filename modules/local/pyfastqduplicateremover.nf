@@ -6,7 +6,7 @@ process PYFASTQDUPLICATEREMOVER{
     tuple val(meta), path(demultiplexed)
 
     output:
-    tuple val(meta), path("flexbar_trimmed_*_collapsed.fasta"), emit: collapsed
+    tuple val(meta), path("flexbar_trimmed_*_collapsed.fastq"), emit: collapsed
     path "versions.yml"                                       , emit: versions
 
     when:
@@ -14,7 +14,7 @@ process PYFASTQDUPLICATEREMOVER{
 
     script:
     """
-    pyFastqDuplicateRemover.py -f '$demultiplexed' -o '${demultiplexed.baseName}_collapsed.fasta'
+    pyFastqDuplicateRemover.py -f '$demultiplexed' -o '${demultiplexed.baseName}_collapsed.fastq'
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
