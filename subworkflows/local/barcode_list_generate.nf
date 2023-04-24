@@ -2,7 +2,7 @@
 // Take Samplesheet format and generate a barcode.list file for pyBarcodeFilter
 //
 
-include { GENERATE_BARCODES } from '../../modules/local/generate_barcodes'
+include { GENERATE_BARCODES } from '../../modules/local/generatebarcodes'
 
 workflow BARCODE_LIST_GENERATE {
     take:
@@ -10,10 +10,10 @@ workflow BARCODE_LIST_GENERATE {
 
     main:
     GENERATE_BARCODES( samplesheet )
-        .set{ barcodes }
-
+        
     emit:
-    barcodes
+    barcodes = GENERATE_BARCODES.out.barcodes
+    versions = GENERATE_BARCODES.out.versions
 
     //versioning (either add normal script or get this to take samplesheet checks version output and make it the version for this)
 }

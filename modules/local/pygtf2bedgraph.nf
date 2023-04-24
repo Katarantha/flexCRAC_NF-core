@@ -19,7 +19,7 @@ process PYGTF2BEDGRAPH{
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         pyGTF2bedGraph: \$( pyGTF2bedGraph.py --version)
-    END_VERSION
+    END_VERSIONS
     """
 
 }

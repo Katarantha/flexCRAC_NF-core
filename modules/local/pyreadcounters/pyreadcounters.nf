@@ -20,6 +20,6 @@ process PYREADCOUNTERS{
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         pyReadCounters: \$( pyReadCounters.py --version)
-    END_VERSION
+    END_VERSIONS
     """
 } 

@@ -19,7 +19,7 @@ process PYGTF2SGR{
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         pyGTF2sgr: \$( pyGTF2sgr.py --version)
-    END_VERSION
+    END_VERSIONS
     """
 
 }

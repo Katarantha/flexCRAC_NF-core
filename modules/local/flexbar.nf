@@ -18,7 +18,8 @@ process FLEXBAR {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        flexbar: \$( flexbar -version)
-    END_VERSION
+        flexbar: \$( flexbar -version | sed -e 's/^.*flexbar version: //; s/SeqAn.*\$//')
+        \$( flexbar -version | sed '2q;d'; -e 's/^.*SeqAn version: //' )
+    END_VERSIONS
     """
 } 

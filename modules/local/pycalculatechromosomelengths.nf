@@ -7,7 +7,7 @@ process CHROMOSOMELENGTH{
 
     output:
     path '*.txt'                   , emit: chromosome
-    path "versions.yml"            , emit: version
+    path "versions.yml"            , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

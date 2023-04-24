@@ -21,7 +21,7 @@ process PYBARCODEFILTER {
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         pyBarcodeFilter: \$( pyBarcodeFilter.py --version)
-    END_VERSION
+    END_VERSIONS
     """
     //run pyBarcode Filter on the trimmed reads from previous step using the barcodes provides with a maximum mismatch of 1 (this is the default)
 } 
