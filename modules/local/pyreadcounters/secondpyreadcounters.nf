@@ -8,6 +8,7 @@ process SECONDPYREADCOUNTERS{
 
     output:
     tuple val(meta), path('*.gtf'), emit: mapped2
+    path "*.txt"                  , emit: hitmaps2
     path "versions.yml"           , emit: versions
 
     when:

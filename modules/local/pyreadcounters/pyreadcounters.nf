@@ -8,6 +8,7 @@ process PYREADCOUNTERS{
 
     output:
     tuple val(meta), path("*.gtf"), emit: mapped
+    path "*.txt"                  , emit: hitmaps
     path "versions.yml"           , emit: versions
 
     when:
