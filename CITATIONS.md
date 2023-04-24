@@ -15,6 +15,25 @@
 - [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
   > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
 
+  - [Flexbar](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4009805/)  
+  > Dodt M, Roehr JT, Ahmed R, Dieterich C. FLEXBAR-Flexible Barcode and Adapter Processing for Next-Generation Sequencing Platforms. Biology (Basel). 2012 Dec 14;1(3):895-905. doi: 10.3390/biology1030895. PMID: 24832523; PMCID: PMC4009805.
+
+- [PyCRAC](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2014-15-1-r8#citeas)
+  > Webb, S., Hector, R.D., Kudla, G. et al. PAR-CLIP data indicate that Nrd1-Nab3-dependent transcription termination regulates expression of hundreds of protein coding genes in yeast. Genome Biol 15, R8 (2014). https://doi.org/10.1186/gb-2014-15-1-r8
+
+- [STAR](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3530905/)
+  > Dobin A, Davis CA, Schlesinger F, Drenkow J, Zaleski C, Jha S, Batut P, Chaisson M, Gingeras TR. STAR: ultrafast universal RNA-seq aligner. Bioinformatics. 2013 Jan 1;29(1):15-21. doi: 10.1093/bioinformatics/bts635. Epub 2012 Oct 25. PMID: 23104886; PMCID: PMC3530905.
+
+- [HISAT2](https://www.nature.com/articles/s41587-019-0201-4)
+  > Kim, D., Paggi, J.M., Park, C. et al. Graph-based genome alignment and genotyping with HISAT2 and HISAT-genotype. Nat Biotechnol 37, 907–915 (2019). https://doi.org/10.1038/s41587-019-0201-4
+
+- [BOWTIE2](https://www.nature.com/articles/nmeth.1923)
+  > Langmead, B., Salzberg, S. Fast gapped-read alignment with Bowtie 2. Nat Methods 9, 357–359 (2012). https://doi.org/10.1038/nmeth.1923
+
+- [Test_Dataset](https://pubmed.ncbi.nlm.nih.gov/26694144/)
+  > Holmes RK, Tuck AC, Zhu C, Dunn-Davies HR, Kudla G, Clauder-Munster S, Granneman S, Steinmetz LM, Guthrie C, Tollervey D. Loss of the Yeast SR Protein Npl3 Alters Gene Expression Due to Transcription Readthrough. PLoS Genet. 2015 Dec 22;11(12):e1005735. doi: 10.1371/journal.pgen.1005735. PMID: 26694144; PMCID: PMC4687934.
+
+
 ## Software packaging/containerisation tools
 
 - [Anaconda](https://anaconda.com)

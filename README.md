@@ -72,7 +72,7 @@ nf-core/cracflexalign was originally written by Connor Hudson.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
+Special Thanks to Dr Hywell Dunn-Davies for guidance and support through this pipelines development as well as supplying the test data this pipeline was designed on.
 
 ## Contributions and Support
 

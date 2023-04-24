@@ -3,12 +3,26 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.1.3dev - 24 April 2023
+## v0.1.4dev - 24th
+
+### `Added`
+	CITATIONS.md	: Added citations for all used software and test dataset
+	README.md		: Added Contributions, Example Commands and Pipeline Summary
+	conf/base.config: Addition of new default parameters
+	conf/test.config: Addition of paths to sample dataset
+	docs/usage.md	: Addition of usage input parameters and example commands
+	test/			: Addition of test dataset files for .gtf, .fasta and .fastq.gz files
+
+### `Fixed`
+	assets/samplesheet.csv: Changes to accomodate test dataset
+	cracflexalign.nf	  : Changes to GTF file staging
+
+## v0.1.3dev - 24th April 2023
 
 ### `Added`
 	README.md: Addition of Pipeline Summary and Command Example
 
-## v0.1.2dev - 24 April 2023
+## v0.1.2dev - 24th April 2023
 
 ### `Added`
 	cracflexalign.nf	: Addition of Hisat2 Aligner and index builder, formatting and commenting changes for readability
@@ -19,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	modules/nf-core/bowtie2/align/main.nf: Changes to input staging and removal of meta variable to accomodate pipeline
 	modules/nf-core/bowtie2/build/main.nf: Changes to input staging and removal of meta variable to accomodate pipeline
 
-## v0.1.1dev - 24 April 2023
+## v0.1.1dev - 24th April 2023
 
 ### `Added`
 	cracflexalign.nf	: Addition of Hisat2 aligner and index builder functionality and channel changes to accomodate
@@ -32,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	modules/nf-core/hisat2/build/main.nf	: Changes to inputs, script and run command due to lack of splice site and lack of exon generation	
 
 
-## v0.1.0dev - 24 April 2023
+## v0.1.0dev - 24th April 2023
 
 ### `Added`
 	cracflexalign.nf: Addition of version checking for all processing within the pipeline
@@ -49,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	modules/local/pyreadcounters/secondpyreadcounters.nf : Bug Fixes to version emit
 	subworkflows/local/barcode_list_generate.nf 		 : Bug Fixes to version emit
 
-## v0.0.12dev - 22 April 2023
+## v0.0.12dev - 22nd April 2023
 
 ### `Added`
 	cracflexalign.nf: Addition of pyGTF2bedGraph functionality
@@ -57,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Fixed`
 	modules/local/pygtf2bedgraph.nf: Input staging changes to allow functionality in current pipeline
 
-## v0.0.11dev - 22 April 2023
+## v0.0.11dev - 22nd April 2023
 
 ### `Added`
 	cracflexalign.nf: Addition of pyGTF2SGR module functionality
@@ -66,7 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	modules/local/pygtf2sgr.nf: Input staging changes to allow functionality in current pipeline 
 	modules/local/pycalculatechromosomelengths.nf: Formatting changes
 
-## v0.0.10dev - 22 April 2023
+## v0.0.10dev - 22nd April 2023
 
 ### `Added`
 	cracflexalign.nf: Addition of pyCalculateChromosomeLength functionality in preperation for downstream processes
@@ -74,7 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Fixed`
 	modules/local/pycalculatechromosomelengths.nf: Bug Fixes to versioning 
 
-## v0.0.9dev - 22 April 2023
+## v0.0.9dev - 22nd April 2023
 
 ### `Added`
 	cracflexalign.nf: Addition of pyReadCounters and SecondpyReadCounters functionality
@@ -83,7 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	modules/local/pyreadcounters/pyreadcounters.nf	    : Changes to input staging
 	modules/local/pyreadcounters/secondpyreadcounters.nf: Changes to input staging
 
-## v0.0.8dev - 22 April 2023
+## v0.0.8dev - 22nd April 2023
 
 ### `Added`
 	cracflexalign.nf	: Added STAR ALIGN and GENOMEGENERATE fucntionality, Addition of channels and input staging      for Alignment steps
