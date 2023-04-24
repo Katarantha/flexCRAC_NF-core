@@ -134,6 +134,14 @@ workflow CRACFLEXALIGN {
         ch_index = HISAT2_BUILD.out.index
     }
 
+    if (params.aligner == 'bowtie2'){
+    BOWTIE2_BUILD( 
+        ch_fasta
+        )
+        ch_versions = ch_versions.mix(BOWTIE2_BUILD.out.versions.first())
+        ch_index = BOWTIE2_BUILD.out.index
+    }
+
     //
     // MODULE: Run Flexbar - Adapter Trimming
     //
@@ -210,6 +218,17 @@ workflow CRACFLEXALIGN {
         ch_versions = ch_versions.mix(HISAT2_ALIGN.out.versions)
 
         ch_alignment_out = HISAT2_ALIGN.out.bam
+    }
+
+    if (params.aligner == 'bowtie2'){
+        align_ch = BOWTIE2_ALIGN( 
+            ch_aligner_input,
+            params.save_unaligned,
+            params.sort_bam
+        )
+        ch_versions = ch_versions.mix(BOWTIE2_ALIGN.out.versions)
+
+        ch_alignment_out = BOWTIE2_ALIGN.out.bam
     }
 
     //
@@ -291,19 +310,6 @@ workflow CRACFLEXALIGN {
         ch_multiqc_logo.toList()
     )
     multiqc_report = MULTIQC.out.report.toList()
-
-//     if (params.aligner == 'bowtie2'){
-//         indexed_files_ch = BOWTIE2_BUILD( genome_ch )
-//     }
-
-//     if (params.aligner == 'hisat2'){
-//         align_ch = HISAT2_ALIGN( indexed_files_ch, collapse_ch)
-//     }
-
-//     if (params.aligner == 'bowtie2'){
-//         align_ch = BOWTIE2_ALIGN( indexed_files_ch, collapse_ch)
-//     }
-//     //generation of hit tables with pyReadCounters.py from the aligned reads
 
 }
 

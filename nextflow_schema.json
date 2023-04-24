@@ -131,6 +131,12 @@
                     "fa_icon": "fas fa-save",
                     "description": "Where possible, save unaligned reads from either STAR, HISAT2 or Salmon to the results directory.",
                     "help_text": "This may either be in the form of FastQ or BAM files depending on the options available for that particular tool."
+                },
+                "sort_bam": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-save",
+                    "description": "Use samtools sort (true) or samtools view (false).",
+                    "help_text": "This may either be in the form of FastQ or BAM files depending on the options available for that particular tool."
                 }
             }
         },

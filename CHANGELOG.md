@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.1.2dev - 24 April 2023
+
+### `Added`
+	cracflexalign.nf	: Addition of Hisat2 Aligner and index builder, formatting and commenting changes for readability
+	nextflow.config		: Addition of sort_bam input parameter
+	nextflow_schema.json: Addition of sort_bam as a valid inpout parameter
+
+### `Fixed`
+	modules/nf-core/bowtie2/align/main.nf: Changes to input staging and removal of meta variable to accomodate pipeline
+	modules/nf-core/bowtie2/build/main.nf: Changes to input staging and removal of meta variable to accomodate pipeline
+
 ## v0.1.1dev - 24 April 2023
 
 ### `Added`

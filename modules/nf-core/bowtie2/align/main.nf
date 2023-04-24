@@ -8,8 +8,7 @@ process BOWTIE2_ALIGN {
         'quay.io/biocontainers/mulled-v2-ac74a7f02cebcfcc07d8e8d1d750af9c83b4d45a:a0ffedb52808e102887f6ce600d092675bf3528a-0' }"
 
     input:
-    tuple val(meta) , path(reads)
-    tuple val(meta2), path(index)
+    tuple val(meta) , path(demultiplexed), path(index)
     val   save_unaligned
     val   sort_bam
 
@@ -31,7 +30,7 @@ process BOWTIE2_ALIGN {
     def reads_args = ""
     if (meta.single_end) {
         unaligned = save_unaligned ? "--un-gz ${prefix}.unmapped.fastq.gz" : ""
-        reads_args = "-U ${reads}"
+        reads_args = "-U ${demultiplexed}"
     } else {
         unaligned = save_unaligned ? "--un-conc-gz ${prefix}.unmapped.fastq.gz" : ""
         reads_args = "-1 ${reads[0]} -2 ${reads[1]}"
@@ -47,6 +46,7 @@ process BOWTIE2_ALIGN {
     bowtie2 \\
         -x \$INDEX \\
         $reads_args \\
+        -f \\
         --threads $task.cpus \\
         $unaligned \\
         $args \\
