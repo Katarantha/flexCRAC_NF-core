@@ -3,6 +3,23 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.1.6dev - 25th April 2023
+
+### `Added`
+	modules/nf-core/hisat2/extractsplicesites/: New Module addition to accomodate Hisat2 build and align
+	modules.json							  : Addition of Hisat2 extractsplicesites module 
+
+### `Fixed`
+	README.md					  		: fixed typo in default command
+	conf/modules.config			  		: Changes to Hisat2 Alignment process to use -f default argument
+	modules/nf-core/fastqc/main.nf		: Reversion to changes to fit with NF-core modules
+	modules/nf-core/hisat2/align/main.nf: Reversion to changes to fit with NF-core modules
+	modules/nf-core/hisat2/build/main.nf: Reversion to changes to fit with NF-core modules
+	modules/nf-core/star/align/main.nf	: Reversion to changes to fit with NF-core modules
+	nextflow.config						: Changes to default hisat2 build memory allocation
+	subworkflows/local/input_check.nf	: Moved read grouping to main workflow
+	workflows/cracflexalign.nf			: Changes to Channeling and process inputs due to reversion to above modules
+
 ## v0.1.5dev - 24th April 2023
 
 ### `Fixed`

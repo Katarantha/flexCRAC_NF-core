@@ -11,8 +11,8 @@ process HISAT2_BUILD {
 
     input:
     path fasta
-    //path gtf
-    // path splicesites
+    path gtf
+    path splicesites
 
     output:
     path "hisat2"       , emit: index
@@ -36,10 +36,10 @@ process HISAT2_BUILD {
     def extract_exons = ''
     def hisat2_build_memory = params.hisat2_build_memory ? (params.hisat2_build_memory as nextflow.util.MemoryUnit).toGiga() : 0
     if (avail_mem >= hisat2_build_memory) {
-    //    log.info "[HISAT2 index build] At least ${hisat2_build_memory} GB available, so using splice sites and exons to build HISAT2 index"
-    //    extract_exons = "hisat2_extract_exons.py $gtf > ${gtf.baseName}.exons.txt"
-    //   ss = "--ss $splicesites"
-    //    exon = "--exon ${gtf.baseName}.exons.txt"
+        log.info "[HISAT2 index build] At least ${hisat2_build_memory} GB available, so using splice sites and exons to build HISAT2 index"
+        extract_exons = "hisat2_extract_exons.py $gtf > ${gtf.baseName}.exons.txt"
+        ss = "--ss $splicesites"
+        exon = "--exon ${gtf.baseName}.exons.txt"
     } else {
         log.info "[HISAT2 index build] Less than ${hisat2_build_memory} GB available, so NOT using splice sites and exons to build HISAT2 index."
         log.info "[HISAT2 index build] Use --hisat2_build_memory [small number] to skip this check."
@@ -47,8 +47,11 @@ process HISAT2_BUILD {
     def VERSION = '2.2.1' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
     mkdir hisat2
+    $extract_exons
     hisat2-build \\
         -p $task.cpus \\
+        $ss \\
+        $exon \\
         $args \\
         $fasta \\
         hisat2/${fasta.baseName}

@@ -19,6 +19,8 @@ for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true
 
 // Check mandatory parameters
 if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
+if (params.fasta) { ch_fasta = file(params.fasta) } else { exit 2, 'Fasta file not specified!'}
+if (params.gtf)   { ch_gtf = file(params.gtf) } else { exit 3, 'GTF file not specified!'}
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -45,6 +47,7 @@ include { BARCODE_LIST_GENERATE   } from '../subworkflows/local/barcode_list_gen
 include { FLEXBAR                 } from '../modules/local/flexbar'
 include { PYBARCODEFILTER         } from '../modules/local/pybarcodefilter'
 include { PYFASTQDUPLICATEREMOVER } from '../modules/local/pyfastqduplicateremover'
+include { CHROMOSOMELENGTH        } from '../modules/local/pycalculatechromosomelengths'
 include { PYREADCOUNTERS          } from '../modules/local/pyreadcounters/pyreadcounters'
 include { SECONDPYREADCOUNTERS    } from '../modules/local/pyreadcounters/secondpyreadcounters'
 include { PYGTF2SGR               } from '../modules/local/pygtf2sgr'
@@ -63,12 +66,12 @@ include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { STAR_GENOMEGENERATE         } from '../modules/nf-core/star/genomegenerate/main'
-include { STAR_ALIGN                  } from '../modules/nf-core/star/align/main'     
+include { STAR_ALIGN                  } from '../modules/nf-core/star/align/main'    
+include { HISAT2_EXTRACTSPLICESITES   } from '../modules/nf-core/hisat2/extractsplicesites/main'     
 include { HISAT2_BUILD                } from '../modules/nf-core/hisat2/build/main'
 include { HISAT2_ALIGN                } from '../modules/nf-core/hisat2/align/main'
 include { BOWTIE2_BUILD               } from '../modules/nf-core/bowtie2/build/main'
 include { BOWTIE2_ALIGN               } from '../modules/nf-core/bowtie2/align/main'  
-include { CHROMOSOMELENGTH            } from '../modules/local/pycalculatechromosomelengths'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -91,6 +94,11 @@ workflow CRACFLEXALIGN {
     )
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
 
+    ch_input_process = INPUT_CHECK.out.reads
+    ch_pipeline_input = ch_input_process.groupTuple(by: [1])
+
+    
+
     //
     // SUWORKFLOW: read Samplesheet and generate a barcode.list file 
     //
@@ -109,9 +117,6 @@ workflow CRACFLEXALIGN {
     )
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
-    ch_fasta    = channel.fromPath(params.fasta, checkIfExists: true)
-    ch_gtf      = channel.fromPath(params.gtf, checkIfExists: true)
-
     //
     // MODULE: run STAR_GENOMEGENERATE - generation of alignement index for downstream STAR_ALIGN step
     //
@@ -121,7 +126,7 @@ workflow CRACFLEXALIGN {
             ch_fasta, 
             ch_gtf
         )
-        ch_versions = ch_versions.mix(STAR_GENOMEGENERATE.out.versions.first())
+        ch_versions = ch_versions.mix(STAR_GENOMEGENERATE.out.versions)
 
         ch_index = STAR_GENOMEGENERATE.out.index
     }
@@ -131,11 +136,17 @@ workflow CRACFLEXALIGN {
     //
 
     if (params.aligner == 'hisat2'){
+        HISAT2_EXTRACTSPLICESITES(
+            ch_gtf
+        )
+        ch_versions = ch_versions.mix(HISAT2_EXTRACTSPLICESITES.out.versions)
+        
         HISAT2_BUILD( 
             ch_fasta ,
-            // params.gtf
+            ch_gtf,
+            HISAT2_EXTRACTSPLICESITES.out.txt
         )
-        ch_versions = ch_versions.mix(HISAT2_BUILD.out.versions.first())
+        ch_versions = ch_versions.mix(HISAT2_BUILD.out.versions)
         ch_index = HISAT2_BUILD.out.index
     }
 
@@ -147,7 +158,7 @@ workflow CRACFLEXALIGN {
     BOWTIE2_BUILD( 
         ch_fasta
         )
-        ch_versions = ch_versions.mix(BOWTIE2_BUILD.out.versions.first())
+        ch_versions = ch_versions.mix(BOWTIE2_BUILD.out.versions)
         ch_index = BOWTIE2_BUILD.out.index
     }
 
@@ -156,7 +167,7 @@ workflow CRACFLEXALIGN {
     //
 
     FLEXBAR ( 
-        INPUT_CHECK.out.reads
+        ch_pipeline_input
     ) 
     ch_versions = ch_versions.mix(FLEXBAR.out.versions)
 
@@ -199,7 +210,6 @@ workflow CRACFLEXALIGN {
     ch_versions = ch_versions.mix(PYFASTQDUPLICATEREMOVER.out.versions)
 
     ch_collapsed_out = PYFASTQDUPLICATEREMOVER.out.collapsed
-
     ch_aligner_input = ch_collapsed_out
                         .combine(ch_index)
 
@@ -209,7 +219,8 @@ workflow CRACFLEXALIGN {
 
     if (params.aligner == 'star'){
         STAR_ALIGN( 
-            ch_aligner_input, 
+            PYFASTQDUPLICATEREMOVER.out.collapsed, 
+            ch_index,
             params.gtf,
             params.star_ignore_sjdbgtf,
             params.seq_platform,
@@ -226,7 +237,9 @@ workflow CRACFLEXALIGN {
 
     if (params.aligner == 'hisat2'){
         HISAT2_ALIGN( 
-            ch_aligner_input
+            PYFASTQDUPLICATEREMOVER.out.collapsed,
+            ch_index,
+            HISAT2_EXTRACTSPLICESITES.out.txt
         )
         ch_versions = ch_versions.mix(HISAT2_ALIGN.out.versions)
 

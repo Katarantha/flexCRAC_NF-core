@@ -58,7 +58,7 @@ On release, automated continuous integration tests run the pipeline on a full-si
 
    ```bash
    nextflow run nf-core/cracflexalign --input path/to/samplesheet.csv --outdir <OUTDIR> --fasta /path/to/genome.fasta
-   -gtf path/to/gtfFile.gtf --seq_platform <Sequencing Platform> --seq_center <Sequencing Center>
+   --gtf path/to/gtfFile.gtf --seq_platform <Sequencing Platform> --seq_center <Sequencing Center>
    -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
    ```
 
