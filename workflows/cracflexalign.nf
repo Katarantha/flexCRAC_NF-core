@@ -155,8 +155,11 @@ workflow CRACFLEXALIGN {
     //
 
     if (params.aligner == 'bowtie2'){
-    BOWTIE2_BUILD( 
-        ch_fasta
+
+    ch_fasta_bowtie2 = Channel.from( file(params.fasta) ).map { row -> [[id:"bowtie2_fasta"], row]}
+
+        BOWTIE2_BUILD( 
+            ch_fasta_bowtie2
         )
         ch_versions = ch_versions.mix(BOWTIE2_BUILD.out.versions)
         ch_index = BOWTIE2_BUILD.out.index
@@ -253,7 +256,8 @@ workflow CRACFLEXALIGN {
 
     if (params.aligner == 'bowtie2'){
         align_ch = BOWTIE2_ALIGN( 
-            ch_aligner_input,
+            PYFASTQDUPLICATEREMOVER.out.collapsed,
+            ch_index,
             params.save_unaligned,
             params.sort_bam
         )

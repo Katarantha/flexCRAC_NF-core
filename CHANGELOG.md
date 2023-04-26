@@ -3,6 +3,22 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.1.7dev - 26th April 2023
+
+### `Added`
+	cracflexalign.nf: Addition of channeling changes to accomodate reversions to STAR build/align modules and Bowtie2 Build/align modules
+
+### `Fixed`
+	conf/modules.conf: Updates to Star Align, MultiQC and DumpSoftwareVersions modules
+	modules.json	 : Updates to Star Align, MultiQC and DumpSoftwareVersions modules
+	modules/nf-core/bowtie2/align/main.nf: Reversion to changes to fit inline with NF-core modules
+	modules/nf-core/bowtie2/build/main.nf: Reversion to changes to fit inline with NF-core modules
+	modules/nf-core/custom/dumpsoftwareversions/main.nf: Updated to NF-core latest version
+	modules/nf-core/custom/dumpsoftwareversions/templates/dumpsoftwareversions.py: Updated to NF-core latest version
+	modules/nf-core/multiqc/main.nf: Updated to NF-core latest version
+	modules/nf-core/star/align/main.nf: Updated to NF-core latest version
+	modules/nf-core/star/align/meta.yml: Updated to NF-core latest version
+
 ## v0.1.6dev - 25th April 2023
 
 ### `Added`
