@@ -1,6 +1,6 @@
 process FLEXBAR {
     tag "$meta.id"
-    label 'process_high'
+    label 'process_medium'
 
     input: 
     tuple val(meta), path(reads)

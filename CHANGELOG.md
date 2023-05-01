@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.2.0dev - 1st May 2023
+
+### `Added`
+	cracflexalign.nf: Addition of MultiQC Reporting on output logs for all three aligners
+	cracflexalign.nf: Addition of Bedgraph and SGR file generation for both of the gene mapping processes instead of only one
+
+### `Fixed`
+	modules/local/flexbar.nf: Changes to CPU resource allocation
+
 ## v0.1.8dev - 27th April 2023
 
 ### `Added`
