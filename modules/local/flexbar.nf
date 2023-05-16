@@ -2,6 +2,11 @@ process FLEXBAR {
     tag "$meta.id"
     label 'process_medium'
 
+    conda "conda-forge::flexbar=3.5.0--hf53871c_6"
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/flexbar:3.5.0--hf53871c_6' :
+        'quay.io/biocontainers/flexbar' }"
+
     input: 
     tuple val(meta), path(reads)
 
