@@ -14,7 +14,7 @@
 
 This Pipeline is designed to take Dr Sander Grannemans PyCrac package aswell as three flexible aligners to allow for the processing and alignment of CRAC cDNA data into readable gene annotated results.
 
-**nf-core/cracflexalign** is a bioinformatics best-practice analysis pipeline for A pipeline for the processing and analysis of CRAC cDNA readouts with multiple flexible alignment options.
+**nf-core/cracflexalign** is a bioinformatics best-practice analysis pipeline for the processing and analysis of CRAC cDNA readouts with multiple flexible alignment options.
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
 
